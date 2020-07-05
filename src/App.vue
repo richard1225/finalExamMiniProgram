@@ -1,15 +1,63 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <router-view />
+    <van-tabbar
+      v-model="active"
+      @change="onChange"
+      route
+    >
+      <van-tabbar-item
+        replace
+        to="/"
+        icon="home-o"
+      >主页</van-tabbar-item>
+      <van-tabbar-item
+        replace
+        to="/order"
+        icon="orders-o"
+      >订单</van-tabbar-item>
+      <van-tabbar-item
+        replace
+        to="/favorite"
+        icon="like-o"
+      >收藏</van-tabbar-item>
+      <van-tabbar-item
+        replace
+        to="/account"
+        icon="user-circle-o"
+      >个人</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
+<script>
+// import { Notify } from 'vant'
+export default {
+  data () {
+    return {
+      active: ''
+    }
+  },
+  methods: {
+    onChange (index) {
+      // Notify({ type: 'primary', message: index })
+    }
+  }
+}
+</script>
+
 <style lang="scss">
+* body {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+html,
+body {
+  height: 100%;
+}
 #app {
+  height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
