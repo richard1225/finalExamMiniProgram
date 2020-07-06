@@ -36,6 +36,7 @@
           block
           type="info"
           native-type="submit"
+          @click="handleSellBook"
         >
           提交卖书申请
         </van-button>
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant'
 export default {
   data () {
     return {
@@ -63,6 +65,19 @@ export default {
     }
   },
   methods: {
+    handleSellBook () {
+      let origin = localStorage.getItem('my-sell') || '[]'
+      origin = JSON.parse(origin)
+      const res = {}
+      this.bookInfoList.map((info) => {
+        res[info.label] = info.value
+      })
+      res['订单号'] = (new Date()).valueOf()
+      origin.push(res)
+      localStorage.setItem('my-sell', JSON.stringify(origin))
+      Toast.success('提交成功!')
+      this.$router.go(-1)
+    },
     onSubmit (values) {
       console.log('submit', values)
     },

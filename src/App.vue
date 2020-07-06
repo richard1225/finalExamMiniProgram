@@ -5,6 +5,7 @@
       v-model="active"
       @change="onChange"
       route
+      v-if="shouldShowNav"
     >
       <van-tabbar-item
         replace
@@ -41,6 +42,12 @@ export default {
   methods: {
     onChange (index) {
       // Notify({ type: 'primary', message: index })
+    }
+  },
+  computed: {
+    shouldShowNav () {
+      const route = this.$route
+      return !(route.fullPath === '/login' || route.fullPath === '/regist')
     }
   }
 }

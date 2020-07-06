@@ -9,6 +9,8 @@ import Buy from '../views/BookStore/BuyBook.vue'
 import Sell from '../views/BookStore/SellBook.vue'
 import Store from '../views/BookStore/HomePageCom/ViewStore.vue'
 import Publish from '../views/BookStore/HomePageCom/MyPublish.vue'
+import Login from '../views/BookStore/Login.vue'
+import { Toast } from 'vant'
 
 Vue.use(VueRouter)
 
@@ -17,6 +19,16 @@ const routes = [
     path: '/',
     name: 'HomePageTab',
     component: HomePageTab
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/regist',
+    name: 'Regist',
+    component: Login
   },
   {
     path: '/order',
@@ -68,6 +80,17 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+router.beforeEach((to, from, next) => {
+  const currentUser = localStorage.getItem('currentUser')
+  if (!currentUser && to.path !== '/login' && to.path !== '/regist') {
+    Toast.fail('未登录')
+    next({
+      path: '/login'
+    })
+  } else {
+    next()
+  }
 })
 
 export default router

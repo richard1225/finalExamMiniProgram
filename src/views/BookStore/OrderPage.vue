@@ -26,16 +26,19 @@
         <div
           class="book-item"
           :key="key"
-          v-for="(img, key) in images"
+          v-for="(book, key) in bookList"
         >
-          <div class="book-title">订单编号xxxx订单状态进行中</div>
+          <div class="book-title">订单编号: {{book['订单号']}}</div>
           <img
             class="img-item"
-            :src="img"
+            :src="img2"
           />
           <div class="book-detail">
-            <div style=" font-weight: bold; color: #53bb8f;">书名:《xhXXxxxx》</div>
-            <div style="font-size: 12px">作者: xx</div>
+            <div
+              :style="index === 0 ? 'font-weight: bold; color: #53bb8f;': 'font-size: 12px;margin-top: 10px'"
+              v-for="(v, k, index) in book"
+              :key="k"
+            >{{`${k}: ${v}`}}</div>
           </div>
         </div>
       </van-list>
@@ -55,6 +58,7 @@ export default {
   data () {
     return {
       searchArea: '',
+      img2,
       images: [
         img1, img2, img3, img4, img5, img6
       ],
@@ -65,8 +69,14 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      refreshing: false
+      refreshing: false,
+      bookList: []
     }
+  },
+  mounted () {
+    let mySell = localStorage.getItem('my-sell') || '[]'
+    mySell = JSON.parse(mySell)
+    this.bookList = mySell
   },
   methods: {
     onLoad () {
